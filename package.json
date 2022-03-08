@@ -1,0 +1,23 @@
+{
+  "name": "semaphorebot",
+  "version": "1.0.0",
+  "description": "Discord bot for verifying semaphore zk inclusion proofs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johhonn/semaphorebot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johhonn/semaphorebot/issues"
+  },
+  "homepage": "https://github.com/johhonn/semaphorebot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "ethers": "^5.5.4"
+  }
+}
