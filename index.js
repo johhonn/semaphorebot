@@ -90,7 +90,6 @@ client.on('messageCreate', async function (message) {
 
       if (command === 'verify') {
         main(args[0], message, guild)
-        // console.log('sanity check: ', valid);
       }
     });
 
