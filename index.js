@@ -1,25 +1,32 @@
 const Discord = require('discord.js')
 const config = require('./config.json')
 const ethers = require('ethers')
-const JSON = require('./zkStake.json')
+const ZKSTAKE = require('./zkStake.json')
 const client = new Discord.Client({
   intents: ['GUILDS', 'GUILD_MESSAGES', 'DIRECT_MESSAGES'],
 })
 
 const prefix = '!'
-const address = ''
-//const provider = ethers.providers.getNetwork('rinkeby')
-//const stakecontract = new ethers.Contract(JSON.abi, config.Contract_Address,provider)
+
+const provider = ethers.getDefaultProvider('kovan')
+const stakecontract = new ethers.Contract(
+  config.Contract_Address,
+  ZKSTAKE.abi,
+  provider,
+)
 const checkWhitelist = async (message) => {
-  const decoded = new Buffer(message, 'hex').toString()
-  const params = JSON.parse(decoded)
-  console.log(params)
+  console.log(message)
+  const decoded = new Buffer.from(message, 'hex').toString()
+
+  const params = JSON.parse(decoded.toString())
+
   const r = await stakecontract.verifyIdentityChallenge(
     params.challenge,
     params.nullifierHash,
     params.entityId,
     params.proof,
   )
+
   return r
 }
 client.on('messageCreate', async function (message) {
@@ -41,7 +48,6 @@ client.on('messageCreate', async function (message) {
     const sum = numArgs.reduce((counter, x) => (counter += x))
     message.reply(`The sum of all the arguments you provided is ${sum}!`)
   } else if (command === 'verify') {
-    console.log('DM!!!')
     let valid = await checkWhitelist(args[0])
     console.log(valid)
     if (valid) {
